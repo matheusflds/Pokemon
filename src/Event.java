@@ -1,26 +1,13 @@
 
 public abstract class Event {
 
-	private
-	 long
-	 evtTime;
-	public
-	 Event(
-	long
-	 eventTime) {
-	evtTime = eventTime;
+	private long evtTime;
+	public Event(long eventTime) {
+		evtTime = eventTime;
 	}
-	public
-	 boolean
-	 ready() {
-	return
-	 System.currentTimeMillis() >= evtTime;
+	public boolean ready() {
+		return System.currentTimeMillis() >= evtTime;
 	}
-	abstract
-	 public
-	 void
-	 action();
-	abstract
-	 public
-	 String description();
+	abstract public void action();
+	abstract public String description();
 }

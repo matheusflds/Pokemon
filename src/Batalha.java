@@ -175,8 +175,7 @@ public class Batalha extends Controller {
 		}
 	}
 	public static void main(String[] args) {
-		Batalha simulacao = new Batalha();
-		simulacao.ScriptEx1();		
+			
 	}
 
 }

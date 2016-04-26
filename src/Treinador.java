@@ -4,6 +4,7 @@ public class Treinador {
 	private Pokemon pokemonAtual;
 	private boolean correu;
 	private boolean derrotado;
+	private int[] posicao = {1,1}; 
 	public Treinador (String nome, Pokemon[] listaDePokemons) {
 		this.nome = nome;
 		pokemons = listaDePokemons;	
@@ -60,11 +61,21 @@ public class Treinador {
 		return tem;
 	}
 	//No caso de um pokemon ser derrotado, substitui o mesmo por um pokemon que ainda nao foi derrotado.
+	/*obs: na verdade, quando um pokemon é derrotado, o jogador escolhe o substituo. Mas como nesse exercício não tem
+	 * interação, o método escolhe o primeiro pokemon livre */
 	public void atualizaPokemonAtual() {
 		int size = pokemons.length;
 		for (int i = 0; i < size ; i++) 
-			if (pokemons[i].estaVivo())
+			if (pokemons[i].estaVivo()) {
 				pokemonAtual = pokemons[i];
+				break;
+			}
+	}
+	public int[] localizacao() {
+		return posicao;
+	}
+	public void move(int[] novaPosicao) {
+		posicao = novaPosicao;
 	}
 	//Estes métodos estáticos são apenas para criar treinadores "padrão", poupando tempo na hora da simulação
 	public static Treinador criaTreinadorPadrao1 () {			

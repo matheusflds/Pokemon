@@ -1,4 +1,3 @@
-
 public class Batalha extends Controller {
 	
 	//método para executar a simulação de uma batalha de acordo com o script(exercício 1)
@@ -35,6 +34,21 @@ public class Batalha extends Controller {
 		
 		simulacao.run();
 	}
+	public void ScriptEx2() {
+		System.out.println("Simulação de uma batalha entre dois Treinadores\n");
+		Batalha simulacao = new Batalha();		
+		long tm = System.currentTimeMillis();
+		Treinador player2 = Treinador.criaTreinadorPadrao2();
+		Treinador player1 = Treinador.criaTreinadorPadrao1();
+		
+		simulacao.addEvent (simulacao.new Trocar(tm, player2, "Gastly"));
+		simulacao.addEvent (simulacao.new Trocar(tm, player1, "Hitmontop"));	
+		
+		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
+		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
+		
+		simulacao.run();
+	}
 	
 	//Evento: Treinador ataca outro
 	public class Atacar extends Event {
@@ -49,17 +63,22 @@ public class Batalha extends Controller {
 		}
 		public void action() {
 			Pokemon aux = alvo.getPokemonAtual();
+			double k = quemAtaca.getPokemonAtual().vantagem(aux);
 			if (aux.estaVivo()) {
-				//alvo.recebeAtaque(quemAtaca.getDanoAtual(ataque));	
-				aux.diminuiHP(quemAtaca.getDanoAtual(ataque));
+				aux.diminuiHP(k * quemAtaca.getDanoAtual(ataque));
 				System.out.println(quemAtaca.getNome() + " decidiu atacar:");
 				System.out.println(quemAtaca.getPokemonAtual().getNome() + 
-						" usou " + quemAtaca.getAtaqueAtual(ataque) + "!");
-				
+						" usou " + quemAtaca.getAtaqueAtual(ataque) + "!");				
 			}	
-			if (aux.estaVivo())
-				//System.out.println(aux.getNome() + " agora tem " + aux.getHp() + "HP.\n");
+			if (aux.estaVivo()){
+				if (k == 0)
+					System.out.println("O ataque não surtiu efeito.");
+				else if (k == 0.5)
+					System.out.println("O ataque não foi muito efetivo.");
+				else if (k == 2)
+					System.out.println("O ataque foi muito efetivo!");
 				System.out.println(aux.getNome() + " agora tem " + alvo.getPokemonAtual().getHp() + "HP.\n");
+			}
 			else {
 				System.out.println(aux.getNome() + " foi derrotado.");
 				if (alvo.temPokemonVivo()) {
@@ -155,7 +174,7 @@ public class Batalha extends Controller {
 			return false;
 		}
 	}
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		Batalha simulacao = new Batalha();
 		simulacao.ScriptEx1();		
 	}

@@ -1,4 +1,3 @@
-
 public class Treinador {
 	private String nome;
 	private Pokemon[] pokemons = new Pokemon[6];
@@ -69,14 +68,14 @@ public class Treinador {
 	}
 	//Estes métodos estáticos são apenas para criar treinadores "padrão", poupando tempo na hora da simulação
 	public static Treinador criaTreinadorPadrao1 () {			
-		Pokemon[] listaPokemon = {Pokemon.Mew(), Pokemon.Bulbasaur(), Pokemon.Digglet(),
+		Pokemon[] listaPokemon = {Pokemon.Mew(), Pokemon.Bulbasaur(), Pokemon.Diglett(),
 				Pokemon.Hitmontop(), Pokemon.Jigglypuff(), Pokemon.Squirtle()};		
 		return new Treinador ("Felix", listaPokemon);	
 	}
 	public static Treinador criaTreinadorPadrao2 () {		
 		Pokemon[] listaPokemon = {Pokemon.Charmander(), Pokemon.Bellsprout(), Pokemon.Slowpoke(),
 				Pokemon.Gastly(), Pokemon.Fearow(), Pokemon.Staryu()};		
-		Treinador padrao = new Treinador ("Felipao", listaPokemon);
+		Treinador padrao = new Treinador ("Salaminho", listaPokemon);
 		return padrao;		
 	}
 	

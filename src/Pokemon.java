@@ -91,7 +91,7 @@ public class Pokemon {
 	}
 	public void imprimeAtaques() {
 		for(int i = 0; i < 4; i++) {
-			System.out.println(i + " - " +  this.ataques[i]);
+			System.out.println(i + " - " + this.ataques[i]);
 		}
 	}
 	//alguns métodos que servem apenas para retornar um determinado pokemon dentre alguns já criados

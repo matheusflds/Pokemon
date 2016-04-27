@@ -109,6 +109,7 @@ public class Mapa {
 					if(mapaJogo.localidade(player.localizacao()[0],player.localizacao()[1]) == '*'){
 						if(Math.random() > 0.5){
 							//Encontra batalha
+							Batalha selvagem = new Batalha();
 						}
 					}				
 				}

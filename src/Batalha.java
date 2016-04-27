@@ -68,7 +68,13 @@ public class Batalha extends Controller {
 				addEvent (new Atacar (tm, jogador, inimigo, opcao));
 			}
 			else if (opcao == 2) {
-				addEvent (new Curar )
+				long tm = System.currentTimeMillis();
+				addEvent (new Curar(tm, jogador));
+			}
+			else if (opcao == 3) {
+				long tm = System.currentTimeMillis();
+				System.out.println("Escolha o pokemon substituto: ");
+				
 			}
 		}
 		

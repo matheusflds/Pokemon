@@ -78,18 +78,13 @@ public class Treinador {
 		int[] novaPosicao = {lin, col};
 		posicao = novaPosicao;
 	}
+	public void imprimePokemons() {
+		int aux = pokemons.length;
+		for (int i = 0; i < aux; i++) {
+			if (pokemons[i].estaVivo())
+				System.out.println(i + " - " + pokemons[i].getNome());
+		}
+	}
 	
-	//Estes métodos estáticos são apenas para criar treinadores "padrão", poupando tempo na hora da simulação
-	public static Treinador criaTreinadorPadrao1 () {			
-		Pokemon[] listaPokemon = {Pokemon.Mew(), Pokemon.Bulbasaur(), Pokemon.Diglett(),
-				Pokemon.Hitmontop(), Pokemon.Jigglypuff(), Pokemon.Squirtle()};		
-		return new Treinador ("Felix", listaPokemon);	
-	}
-	public static Treinador criaTreinadorPadrao2 () {		
-		Pokemon[] listaPokemon = {Pokemon.Charmander(), Pokemon.Bellsprout(), Pokemon.Slowpoke(),
-				Pokemon.Gastly(), Pokemon.Fearow(), Pokemon.Staryu()};		
-		Treinador padrao = new Treinador ("Salaminho", listaPokemon);
-		return padrao;		
-	}
 	
 }

@@ -1,83 +1,62 @@
 import java.util.Scanner;
 public class Batalha extends Controller {
-	
-	//método para executar a simulação de uma batalha de acordo com o script(exercício 1)
-	public void ScriptEx1() {
-		System.out.println("Simulação de uma batalha entre dois Treinadores\n");
-		Batalha simulacao = new Batalha();		
-		long tm = System.currentTimeMillis();
-		Treinador player2 = Treinador.criaTreinadorPadrao2();
-		Treinador player1 = Treinador.criaTreinadorPadrao1();	
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 0));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 0));		
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 3));
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Trocar(tm, player1, "Hitmontop"));
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
-		
-		simulacao.addEvent (simulacao.new Curar(tm, player2));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 1));
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Fugir(tm, player1));
-		
-		simulacao.run();
-	}
-	public void ScriptEx2() {
-		System.out.println("Simulação de uma batalha entre dois Treinadores\n");
-		Batalha simulacao = new Batalha();		
-		long tm = System.currentTimeMillis();
-		Treinador player2 = Treinador.criaTreinadorPadrao2();
-		Treinador player1 = Treinador.criaTreinadorPadrao1();
-		
-		simulacao.addEvent (simulacao.new Trocar(tm, player2, "Gastly"));
-		simulacao.addEvent (simulacao.new Trocar(tm, player1, "Hitmontop"));	
-		
-		simulacao.addEvent (simulacao.new Atacar(tm, player2, player1, 1));
-		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
-		
-		simulacao.run();
-	}
+
 	public void batalhaSelvagem (Treinador jogador) {
 		//cria o treinador que tem o pokemon selvagem
-		Pokemon[] listaPokemon = { Pokemon.Pidgey()};
+		Scanner leitura = new Scanner (System.in);
+		Pokemon[] listaPokemon = { Fixo.Pidgey()};
 		Treinador inimigo = new Treinador ("Pokemon selvagem", listaPokemon);
-		while (!jogador.fugiu() && jogador.temPokemonVivo() && inimigo.temPokemonVivo()) {
-			Scanner leitura = new Scanner (System.in);
+		System.out.println("\nUm " + inimigo.getPokemonAtual().getNome() + " selvagem apareceu!");
+		while (!jogador.fugiu() && jogador.temPokemonVivo() && inimigo.temPokemonVivo()) {	
 			System.out.println("O que deseja fazer?");
-			System.out.println("1 - Atacar\n 2 - Usar poção de cura\n 3 - Trocar de pokemon\n 4 - Fugir");
+			System.out.println("1 - Atacar\n2 - Usar poção de cura\n3 - Trocar de pokemon\n4 - Fugir");
 			int opcao = leitura.nextInt();
+			Batalha simulacao = new Batalha();
 			if (opcao == 1) {
 				System.out.println("Escolha o ataque: ");
 				Pokemon aux = jogador.getPokemonAtual();
 				aux.imprimeAtaques();
 				opcao = leitura.nextInt();
 				long tm = System.currentTimeMillis();
-				addEvent (new Atacar (tm, jogador, inimigo, opcao));
+				simulacao.addEvent (new Atacar (tm, jogador, inimigo, opcao));
 			}
 			else if (opcao == 2) {
 				long tm = System.currentTimeMillis();
-				addEvent (new Curar(tm, jogador));
+				simulacao.addEvent (new Curar(tm, jogador));
 			}
 			else if (opcao == 3) {
 				long tm = System.currentTimeMillis();
 				System.out.println("Escolha o pokemon substituto: ");
-				
+				jogador.imprimePokemons();
+				int novoPokemon = leitura.nextInt();
+				simulacao.addEvent (new Trocar (tm, jogador, novoPokemon));
 			}
+			else if (opcao == 4) {
+				long tm = System.currentTimeMillis();
+				simulacao.addEvent (new Fugir (tm, jogador));
+			}
+			
+			//Ataque do selvagem
+			double sorteio = Math.random();
+			if(sorteio < 0.25) {
+				long tm = System.currentTimeMillis();
+				simulacao.addEvent (new Atacar(tm, inimigo, jogador, 0));
+			}
+			else if(sorteio >= 0.25 && sorteio < 0.5) {
+				long tm = System.currentTimeMillis();
+				simulacao.addEvent (new Atacar(tm, inimigo, jogador, 1));
+			}
+			else if(sorteio >= 0.5 && sorteio < 0.75) {
+				long tm = System.currentTimeMillis();
+				simulacao.addEvent (new Atacar(tm, inimigo, jogador, 2));
+			}
+			else if(sorteio >= 0.75) {
+				long tm = System.currentTimeMillis();
+				simulacao.addEvent (new Atacar(tm, inimigo, jogador, 3));
+			}
+			simulacao.run();
 		}
-		
+		leitura.close();
 	}
 	
 	//Evento: Treinador ataca outro
@@ -110,11 +89,16 @@ public class Batalha extends Controller {
 				System.out.println(aux.getNome() + " agora tem " + alvo.getPokemonAtual().getHp() + "HP.\n");
 			}
 			else {
+				Scanner leitura = new Scanner(System.in);
 				System.out.println(aux.getNome() + " foi derrotado.");
+				/*Substituição do pokémon derrotado*/
 				if (alvo.temPokemonVivo()) {
-					alvo.atualizaPokemonAtual();
-					System.out.println("O pokemon derrotado foi substituido por " 
-							+ alvo.getPokemonAtual().getNome() + ".\n");
+					System.out.println("Escolha o pokemon substituto (digite o nome): ");
+					alvo.imprimePokemons();
+					int novoPokemon = leitura.nextInt();
+					long tm = System.currentTimeMillis();
+					Trocar troca = new Trocar (tm, alvo, novoPokemon);
+					troca.action();
 				}
 				else {
 					System.out.println (alvo.getNome() + " foi derrotado!\n");
@@ -157,20 +141,18 @@ public class Batalha extends Controller {
 	//Evento: Treinador troca de pokemon
 	public class Trocar extends Event {
 		private Treinador jogador;
-		private String novoPokemon;
-		public Trocar (long eventTime, Treinador jogador, String novoPokemon) {
+		private int novoPokemon;
+		public Trocar (long eventTime, Treinador jogador, int novoPokemon) {
 			super(eventTime);
 			this.jogador = jogador;
 			this.novoPokemon = novoPokemon;
 		}
 		public void action() {
-			for (int i = 0; i < jogador.quantosPokemons(); i++) {
-				Pokemon aux = jogador.getPokemon(i);
-				if (aux.estaVivo() && aux.getNome() == novoPokemon) {
-					jogador.mudaPokemonAtual(i);
-					System.out.println(jogador.getNome() + " trocou de pokemon. Pokemon atual: " + novoPokemon + ".\n");
-				}
-			}				
+			Pokemon aux = jogador.getPokemon(novoPokemon);
+			if (aux.estaVivo()) {
+				jogador.mudaPokemonAtual(novoPokemon);
+				System.out.println(jogador.getNome() + " trocou de pokemon. Pokemon atual: " + aux.getNome() + ".\n");
+			}
 		}
 		public int prioridade() {
 			return 2;

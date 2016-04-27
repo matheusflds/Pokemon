@@ -45,20 +45,20 @@ public class Mapa {
 		}
 		return true;		
 	}
-	public char localidade(int lin, int col){
+	public char localidade(int[] posicao){
+		int lin = posicao[0], col = posicao[1];
 		return mapa[lin][col];
 	}
 	public void moveJogador(Treinador jogador, String opcao){
 		if(opcao.compareTo("w") == 0)
 			jogador.move(jogador.localizacao()[0] -1, jogador.localizacao()[1]   );
-		if(opcao.compareTo("a") == 0)
+		else if(opcao.compareTo("a") == 0)
 			jogador.move(jogador.localizacao()[0]   , jogador.localizacao()[1] -1);
-		if(opcao.compareTo("s") == 0)
+		else if(opcao.compareTo("s") == 0)
 			jogador.move(jogador.localizacao()[0] +1, jogador.localizacao()[1]   );
-		if(opcao.compareTo("d") == 0)
+		else if(opcao.compareTo("d") == 0)
 			jogador.move(jogador.localizacao()[0]   , jogador.localizacao()[1] +1);
-		else
-			System.out.println("nao moveu!");
+		
 	}
 	public static void main(String[] args) {
 		Scanner leitura = new Scanner(System.in);
@@ -76,54 +76,51 @@ public class Mapa {
 			System.out.println("Quantos pokemons deseja criar? (no máximo 6)");
 			/*se tivesse interação aqui iriamos ler quantos pokemons o usuario quer e 
 			teria um while, como não tem, vamos criar os pokemons um por um */
-			Pokemon[] listaPokemon1 = {Pokemon.Charmander(), Pokemon.Bellsprout(), Pokemon.Slowpoke(),
-					Pokemon.Gastly(), Pokemon.Fearow(), Pokemon.Staryu()};		
+			Pokemon[] listaPokemon1 = {Fixo.Charmander(), Fixo.Bellsprout(), Fixo.Slowpoke(),
+					Fixo.Gastly(), Fixo.Fearow(), Fixo.Staryu()};		
 			Treinador jogador1 = new Treinador (nome1, listaPokemon1);
 			System.out.println("Crie o jogador 2:");
 			System.out.println("Digite o seu nome:");
 			String nome2 = "Felix";
 			System.out.println("Quantos pokemons deseja criar? (no máximo 6)");
-			Pokemon[] listaPokemon2 = {Pokemon.Mew(), Pokemon.Bulbasaur(), Pokemon.Diglett(),
-					Pokemon.Hitmontop(), Pokemon.Jigglypuff(), Pokemon.Squirtle()};			
+			Pokemon[] listaPokemon2 = {Fixo.Mew(), Fixo.Bulbasaur(), Fixo.Diglett(),
+					Fixo.Hitmontop(), Fixo.Jigglypuff(), Fixo.Squirtle()};			
 			Treinador jogador2 = new Treinador (nome2, listaPokemon2);
 		}
 		else if(tipoJogo == 2){
 			String opcao = " ";
 			
 			//Inicialização do jogo (Cria jogador com pokemons)
-			Treinador player = Treinador.criaTreinadorPadrao1();
+			Treinador player = Fixo.criaTreinadorPadrao1();
 			//Movimentação do jogador
 			Mapa mapaJogo = new Mapa();
 			mapaJogo.imprimeMapa(player);
 			
 			System.out.println("Mover: w - para cima\n a - para a esquerda\n s - para baixo\n d - para a direita.\n Sair: 0");
 			System.out.println("Selecione: ");
-			opcao = leitura.next(); 
-			while(opcao.compareTo("0") != 0){		
-		
+			//opcao = leitura.next(); 
+			while(opcao.compareTo("0") != 0 && player.temPokemonVivo()){		
+				System.out.println("Selecione o movimento: ");
+				opcao = leitura.next(); 
 				if(mapaJogo.caminhoValido(player,opcao)){						
 					mapaJogo.moveJogador(player, opcao);	
 					mapaJogo.imprimeMapa(player);						
-					System.out.println(player.localizacao()[0] + ", " + player.localizacao()[1]);
+					System.out.println("Posicao atual: " + player.localizacao()[0] + ", " + player.localizacao()[1]);
 					/*Se o jogador estiver em grama alta, pode haver batalha com pokémon selvagem*/
-					if(mapaJogo.localidade(player.localizacao()[0],player.localizacao()[1]) == '*'){
-						if(Math.random() > 0.5){
+					if(mapaJogo.localidade(player.localizacao()) == '*'){
+						if(true){//Math.random() > 0.5
 							//Encontra batalha
 							Batalha selvagem = new Batalha();
+							selvagem.batalhaSelvagem(player);
 						}
 					}				
-				}
-				if (player.temPokemonVivo()) {	
-					//Escolha do próximo movimento
-					System.out.println("Selecione o próximo movimento: ");
-					opcao = leitura.next(); 
-				}
-				else 
-					opcao = "0";				
+				}								
 			}
 		}
 		else
 			System.out.println("Obrigado por jogar!");		
+		
+		leitura.close();
 	}
 }
 

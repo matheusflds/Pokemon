@@ -74,9 +74,11 @@ public class Treinador {
 	public int[] localizacao() {
 		return posicao;
 	}
-	public void move(int[] novaPosicao) {
+	public void move(int lin, int col) {
+		int[] novaPosicao = {lin, col};
 		posicao = novaPosicao;
 	}
+	
 	//Estes métodos estáticos são apenas para criar treinadores "padrão", poupando tempo na hora da simulação
 	public static Treinador criaTreinadorPadrao1 () {			
 		Pokemon[] listaPokemon = {Pokemon.Mew(), Pokemon.Bulbasaur(), Pokemon.Diglett(),

@@ -3,14 +3,12 @@ public class Pokemon {
 	private String tipo;
 	private int HP;
 	private Ataque[] ataques;
-	private boolean vivo;
 	private int hpMax;
 	public Pokemon(String nome, String tipo, int HP, Ataque[] listaAtaques){
 		this.nome = nome;
 		this.tipo = tipo;
 		this.HP = HP;
 		ataques = listaAtaques;
-		vivo = true;
 		hpMax = HP;
 	}
 	public String getNome(){
@@ -30,10 +28,8 @@ public class Pokemon {
 	}
 	public void diminuiHP(double dano){
 		int intDano = (int) dano;
-		if (vivo) {
+		if (this.estaVivo()) {
 			HP -= intDano;
-			if (HP < 0)
-				vivo = false;
 		}
 	}
 	public void aumentaHP(int ganho){
@@ -92,6 +88,11 @@ public class Pokemon {
 							}; //Tabela baseada em informações de http://bulbapedia.bulbagarden.net/wiki/Type
 		int pkm1 = associaTipo(tipo), pkm2 = associaTipo(alvo.getTipo());
 		return vantagem[pkm1][pkm2];
+	}
+	public void imprimeAtaques() {
+		for(int i = 0; i < 4; i++) {
+			System.out.println(i + " - " +  this.ataques[i]);
+		}
 	}
 	//alguns métodos que servem apenas para retornar um determinado pokemon dentre alguns já criados
 	//(poupando tempo na hora de criar pokemons para simular a batalha)
@@ -190,6 +191,14 @@ public class Pokemon {
 		listaAtaque[2] = new Ataque("Aerial Ace", 120);
 		listaAtaque[3] = new Ataque("Drill Peck", 160);
 		return new Pokemon ("Fearow", "Voador", 600, listaAtaque);
+	}
+	public static Pokemon Pidgey(){
+		Ataque[] listaAtaque = new Ataque[4];
+		listaAtaque[0] = new Ataque("Tackle", 100);
+		listaAtaque[1] = new Ataque("Gust", 80);
+		listaAtaque[2] = new Ataque("Wing Attack", 120);
+		listaAtaque[3] = new Ataque("Hurricane", 220);
+		return new Pokemon ("Pidgey", "Voador", 400, listaAtaque);
 	}
 }
 

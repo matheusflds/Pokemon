@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Batalha extends Controller {
 	
 	//método para executar a simulação de uma batalha de acordo com o script(exercício 1)
@@ -48,6 +49,29 @@ public class Batalha extends Controller {
 		simulacao.addEvent (simulacao.new Atacar(tm, player1, player2, 2));
 		
 		simulacao.run();
+	}
+	public void batalhaSelvagem (Treinador jogador) {
+		//cria o treinador que tem o pokemon selvagem
+		Pokemon[] listaPokemon = { Pokemon.Pidgey()};
+		Treinador inimigo = new Treinador ("Pokemon selvagem", listaPokemon);
+		while (!jogador.fugiu() && jogador.temPokemonVivo() && inimigo.temPokemonVivo()) {
+			Scanner leitura = new Scanner (System.in);
+			System.out.println("O que deseja fazer?");
+			System.out.println("1 - Atacar\n 2 - Usar poção de cura\n 3 - Trocar de pokemon\n 4 - Fugir");
+			int opcao = leitura.nextInt();
+			if (opcao == 1) {
+				System.out.println("Escolha o ataque: ");
+				Pokemon aux = jogador.getPokemonAtual();
+				aux.imprimeAtaques();
+				opcao = leitura.nextInt();
+				long tm = System.currentTimeMillis();
+				addEvent (new Atacar (tm, jogador, inimigo, opcao));
+			}
+			else if (opcao == 2) {
+				addEvent (new Curar )
+			}
+		}
+		
 	}
 	
 	//Evento: Treinador ataca outro

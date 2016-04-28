@@ -4,9 +4,7 @@ import java.util.Scanner;
 public class Batalha extends Controller {
 	public void batalhaComum (Treinador jogador1, Treinador jogador2) throws FileNotFoundException {	
 		System.out.println("");
-		Scanner leitura = new Scanner(new FileReader("roteiro-batalha-ex1.txt")).useDelimiter("\\||\\n");
-		//Caso não queira seguir o roteiro, e sim interagir com o software, basta utilizar o seguinte código:
-		//Scanner leitura = new Scanner (System.in);
+		Scanner leitura = new Scanner(System.in);
 		
 		while (!jogador1.fugiu() && jogador1.temPokemonVivo() && jogador2.temPokemonVivo() && !jogador2.fugiu()){
 			Batalha simulacao = new Batalha();
@@ -72,7 +70,9 @@ public class Batalha extends Controller {
 		}		
 	}
 	public void batalhaSelvagem (Treinador jogador) {
-		
+		//Reinicialização do atributo correu (caso o jogador tenha fugido na última batalha)
+		if(jogador.fugiu() == true)
+			jogador.voltaCorreu();
 		//cria o treinador que tem o pokemon selvagem
 		Scanner leitura = new Scanner (System.in);
 		Ataque[] listaAtaque = new Ataque[4];
@@ -84,10 +84,10 @@ public class Batalha extends Controller {
 		Treinador inimigo = new Treinador ("Pokemon selvagem", listaPokemon);
 		//Entrando na batalha
 		System.out.println("\nUm " + inimigo.getPokemonAtual().getNome() + " selvagem apareceu!");
-		while (!jogador.fugiu() && jogador.temPokemonVivo() && inimigo.temPokemonVivo()) {	
+		while (!jogador.fugiu() && !jogador.perdeu() && !inimigo.perdeu()) {	
 			System.out.println("O que deseja fazer?");
-			System.out.println("1 - Atacar									2 - Usar poção de cura\n" +
-							   "3 - Trocar de pokemon						4 - Fugir");
+			System.out.println("1 - Atacar				2 - Usar item\n" +
+							   "3 - Trocar de pokemon			4 - Fugir");
 			int opcao = leitura.nextInt();
 			Batalha simulacao = new Batalha();
 			if (opcao == 1) {
@@ -100,7 +100,15 @@ public class Batalha extends Controller {
 			}
 			else if (opcao == 2) {
 				long tm = System.currentTimeMillis();
-				simulacao.addEvent (new Curar(tm, jogador));
+				int item;
+				System.out.println("Escolha o item: \n1 - Poção de cura\n2 - PokéBola");
+				item = leitura.nextInt();
+				if(item == 1)
+					simulacao.addEvent (new Curar(tm, jogador));
+				else if(item == 2)
+					simulacao.addEvent (new Capturar (tm, jogador, inimigo));
+				else
+					System.out.println("Opção inválida!");
 			}
 			else if (opcao == 3) {
 				long tm = System.currentTimeMillis();
@@ -173,13 +181,7 @@ public class Batalha extends Controller {
 				/*Substituição do pokémon derrotado*/
 				if (alvo.temPokemonVivo()) {
 					//Caso não queira seguir o roteiro, e sim interagir com o software, basta utilizar o seguinte código:
-					Scanner leitura = new Scanner (System.in);				
-					try {
-						leitura = new Scanner(new FileReader("roteiro-batalha-ex1.txt")).useDelimiter("\\||\\n");
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					}
-					double pula = leitura.nextDouble();//apenas para 
+					Scanner leitura = new Scanner (System.in);		
 					System.out.println("Escolha o pokemon substituto: ");
 					alvo.imprimePokemons();
 					int novoPokemon = leitura.nextInt();
@@ -293,5 +295,38 @@ public class Batalha extends Controller {
 	public static void main(String[] args) {
 			
 	}
+	//Evento: Treinador tenta capturar o pokémon selvagem
+		public class Capturar extends Event{
+			private Treinador jogador;
+			private Treinador alvo;
+			public Capturar(long eventTime, Treinador jogador, Treinador alvo){
+				super(eventTime);
+				this.jogador = jogador;
+				this.alvo = alvo;
+			}
+			public void action(){
+				System.out.println(jogador.getNome() + " usou uma PokéBola!");
+				if(Math.random() > (jogador.getPokemonAtual().getHp()/jogador.getPokemonAtual().getHpMax()) ) {
+					System.out.println("Conseguiu! O " + alvo.getPokemonAtual().getNome() + " selvagem foi capturado!");
+					jogador.adicionaPokemon(alvo.getPokemonAtual());
+					alvo.foiDerrotado();
+				}
+				else{
+					System.out.println("Ah não! O " + alvo.getPokemonAtual().getNome() + " selvagem escapou!");
+				}
+			}
+			public int prioridade() {
+				return 2;
+			}
+			public boolean treinadorDerrotado() {
+				return alvo.perdeu();
+			}
+			public boolean treinadorFugiu() {
+				return false;
+			}
+			public boolean treinadorTrocou() {
+				return false;
+			}
+		}
 
 }

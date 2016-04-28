@@ -5,6 +5,7 @@ public class Treinador {
 	private boolean correu;
 	private boolean derrotado;
 	private int[] posicao = {1,1}; 
+	
 	public Treinador (String nome, Pokemon[] listaDePokemons) {
 		this.nome = nome;
 		pokemons = listaDePokemons;	
@@ -12,15 +13,11 @@ public class Treinador {
 		correu = false;
 		derrotado = false;
 	}
-	public boolean perdeu() {
-		return derrotado;
-	}
-	public void foiDerrotado() {
-		derrotado = true;
-	}
 	public String getNome() {
 		return nome;
 	}
+	
+	//Métodos relacionados aos pokémons do treinador	
 	public Pokemon getPokemon(int i) {
 		return pokemons[i];
 	}
@@ -35,12 +32,6 @@ public class Treinador {
 	}
 	public void recebeAtaque (int dano) {
 		pokemonAtual.diminuiHP(dano);
-	}
-	public void corre() {
-		correu = true;
-	}
-	public boolean fugiu() {
-		return correu;
 	}
 	public void cura() {
 		if (pokemonAtual.estaVivo())
@@ -60,24 +51,6 @@ public class Treinador {
 			if (pokemons[i].estaVivo()) tem = true;
 		return tem;
 	}
-	//No caso de um pokemon ser derrotado, substitui o mesmo por um pokemon que ainda nao foi derrotado.
-	/*obs: na verdade, quando um pokemon é derrotado, o jogador escolhe o substituo. Mas como nesse exercício não tem
-	 * interação, o método escolhe o primeiro pokemon livre */
-	public void atualizaPokemonAtual() {
-		int size = pokemons.length;
-		for (int i = 0; i < size ; i++) 
-			if (pokemons[i].estaVivo()) {
-				pokemonAtual = pokemons[i];
-				break;
-			}
-	}
-	public int[] localizacao() {
-		return posicao;
-	}
-	public void move(int lin, int col) {
-		int[] novaPosicao = {lin, col};
-		posicao = novaPosicao;
-	}
 	public void imprimePokemons() {
 		int aux = pokemons.length;
 		for (int i = 0; i < aux; i++) {
@@ -85,6 +58,54 @@ public class Treinador {
 				System.out.println(i + " - " + pokemons[i].getNome());
 		}
 	}
+	public void adicionaPokemon(Pokemon novo) {
+		int qtd = pokemons.length;
+		
+		boolean trocou = false;
+		//verifica se tem algum espaço vazio
+		for (int i = 0; i < qtd; i++) {
+			if (!pokemons[i].estaVivo()) {
+				pokemons[i] = novo;
+				trocou = true;
+			}
+		}
+		if (!trocou && qtd < 6) {	
+			//cria uma lista auxiliar
+			Pokemon[] novaLista = new Pokemon[qtd + 1];
+			for(int i = 0; i < qtd; i++)
+				novaLista[i] = pokemons[i];
+			novaLista[qtd] = novo;
+			pokemons = novaLista;
+			System.out.println("Pokemon " + novo.getNome() + "foi adicionado à sua lista!");
+		}
+		else
+			System.out.println("Sua lista de pokemons está cheia!");
+	}
 	
+	//Métodos relacionados a fuga ou derrota do treinador
+		public boolean perdeu() {
+			return derrotado;
+		}
+		public void foiDerrotado() {
+			derrotado = true;
+		}
+		
+		public void corre() {
+			correu = true;
+		}
+		public boolean fugiu() {
+			return correu;
+		}
+		public void voltaCorreu(){
+			correu = false;
+		}
 	
+	//Métodos relacionados à posição do treinador no mapa
+	public int[] localizacao() {
+		return posicao;
+	}
+	public void move(int lin, int col) {
+		int[] novaPosicao = {lin, col};
+		posicao = novaPosicao;
+	}
 }

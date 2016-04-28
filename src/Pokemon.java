@@ -14,17 +14,16 @@ public class Pokemon {
 	public String getNome(){
 		return nome;
 	}
-	public int getHp() {
-		return HP;
-	}
 	public String getTipo(){
 		return tipo;
 	}
-	public String getAtaque(int num){
-		return ataques[num].getNome();
+	
+	//Métodos relacionados ao estado do pokémon
+	public int getHp() {
+		return HP;
 	}
-	public int getDanoAtual(int num) {
-		return ataques[num].getDano();
+	public int getHpMax() {
+		return hpMax;
 	}
 	public void diminuiHP(double dano){
 		int intDano = (int) dano;
@@ -43,6 +42,22 @@ public class Pokemon {
 		if (HP > 0)
 			return true;
 		return false;
+	}
+	
+	//Métodos relacionados aos ataques do pokémon
+	public String getAtaque(int num){
+		return ataques[num].getNome();
+	}
+	public Ataque[] getListaAtk() {
+		return ataques;
+	}
+	public int getDanoAtual(int num) {
+		return ataques[num].getDano();
+	}
+	public void imprimeAtaques() {
+		System.out.println("0 - " + this.ataques[0].getNome() +  "		 1 - " + this.ataques[1].getNome() );
+		System.out.println("2 - " + this.ataques[2].getNome() +  "		 3 - " + this.ataques[3].getNome() );
+
 	}
 	public int associaTipo(String tipo){
 		if(tipo.compareTo("Normal") == 0) return 0;
@@ -89,10 +104,4 @@ public class Pokemon {
 		int pkm1 = associaTipo(tipo), pkm2 = associaTipo(alvo.getTipo());
 		return vantagem[pkm1][pkm2];
 	}
-	public void imprimeAtaques() {
-		System.out.println("0 - " + this.ataques[0].getNome() +  "		 1 - " + this.ataques[1].getNome() );
-		System.out.println("2 - " + this.ataques[2].getNome() +  "		 3 - " + this.ataques[3].getNome() );
-
-	}
-	
 }

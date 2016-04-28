@@ -11,5 +11,5 @@ public abstract class Event {
 	abstract public int prioridade();
 	abstract public boolean treinadorDerrotado();
 	abstract public boolean treinadorFugiu();
+	abstract public boolean treinadorTrocou();
 }
-

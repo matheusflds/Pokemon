@@ -45,24 +45,24 @@ public class Pokemon {
 		return false;
 	}
 	public int associaTipo(String tipo){
-		if(tipo == "Normal") return 0;
-		if(tipo == "Lutador") return 1;
-		if(tipo == "Voador") return 2;
-		if(tipo == "Venenoso") return 3;
-		if(tipo == "Terrestre") return 4;
-		if(tipo == "Rocha") return 5;
-		if(tipo == "Inseto") return 6;
-		if(tipo == "Fantasma") return 7;
-		if(tipo == "Aco") return 8;
-		if(tipo == "Fogo") return 9;
-		if(tipo == "Agua") return 10;
-		if(tipo == "Grama") return 11;
-		if(tipo == "Eletrico") return 12;
-		if(tipo == "Psiquico") return 13;
-		if(tipo == "Gelo") return 14;
-		if(tipo == "Dragao") return 15;
-		if(tipo == "Escuro") return 16;
-		if(tipo == "Fada") return 17;
+		if(tipo.compareTo("Normal") == 0) return 0;
+		else if(tipo.compareTo("Lutador") == 0) return 1;
+		else if(tipo.compareTo("Voador") == 0) return 2;
+		else if(tipo.compareTo("Venenoso") == 0) return 3;
+		else if(tipo.compareTo("Terrestre") == 0) return 4;
+		else if(tipo.compareTo("Rocha") == 0) return 5;
+		else if(tipo.compareTo("Inseto") == 0) return 6;
+		else if(tipo.compareTo("Fantasma") == 0) return 7;
+		else if(tipo.compareTo("Aco") == 0) return 8;
+		else if(tipo.compareTo("Fogo") == 0) return 9;
+		else if(tipo.compareTo("Agua") == 0) return 10;
+		else if(tipo.compareTo("Grama") == 0) return 11;
+		else if(tipo.compareTo("Eletrico") == 0) return 12;
+		else if(tipo.compareTo("Psiquico") == 0) return 13;
+		else if(tipo.compareTo("Gelo") == 0) return 14;
+		else if(tipo.compareTo("Dragao") == 0) return 15;
+		else if(tipo.compareTo("Escuro") == 0) return 16;
+		else if(tipo.compareTo("Fada") == 0) return 17;		
 		else return -1;
 	}
 	public double vantagem(Pokemon alvo){
@@ -90,10 +90,9 @@ public class Pokemon {
 		return vantagem[pkm1][pkm2];
 	}
 	public void imprimeAtaques() {
-		for(int i = 0; i < 4; i++) {
-			System.out.println(i + " - " + this.ataques[i].getNome());
-		}
+		System.out.println("0 - " + this.ataques[0].getNome() +  "		 1 - " + this.ataques[1].getNome() );
+		System.out.println("2 - " + this.ataques[2].getNome() +  "		 3 - " + this.ataques[3].getNome() );
+
 	}
 	
 }
-

@@ -5,8 +5,9 @@ public class Controller {
 	}
 	public void run() {	
 		Event a;
+		boolean trocou = false;
 		boolean perdeu = false, correu = false;
-		while((a = es.getNext()) != null && !perdeu && !correu) {
+		while((a = es.getNext()) != null && !perdeu && !correu && !trocou) {
 			if(a.ready()) {
 				a.action();
 				if (a.treinadorDerrotado())

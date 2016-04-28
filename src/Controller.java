@@ -14,6 +14,8 @@ public class Controller {
 					perdeu = true;
 				if (a.treinadorFugiu())
 					correu = true;
+				if (a.treinadorTrocou())
+					trocou = true;
 				es.removeCurrent(); 
 			}
 		}

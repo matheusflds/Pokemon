@@ -11,5 +11,5 @@ public abstract class Event {
 	abstract public int prioridade();
 	abstract public boolean treinadorDerrotado();
 	abstract public boolean treinadorFugiu();
-	abstract public boolean treinadorTrocou();
+	abstract public boolean treinadorTrocou();//devolve true se o treinador substituiu um pokemon que acabou de ser derrotado
 }

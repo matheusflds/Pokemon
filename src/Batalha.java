@@ -2,10 +2,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 public class Batalha extends Controller {
+	/**********************************************************************/
+	/*	Exercício 1: Simulação de uma batalha entre dois treinadores	  */
+	/**********************************************************************/
 	public void batalhaComum (Treinador jogador1, Treinador jogador2) throws FileNotFoundException {	
 		System.out.println("");
 		Scanner leitura = new Scanner(System.in);
-		
+		System.out.println(jogador1.getNome() + " x " + jogador2.getNome());
 		while (!jogador1.fugiu() && jogador1.temPokemonVivo() && jogador2.temPokemonVivo() && !jogador2.fugiu()){
 			Batalha simulacao = new Batalha();
 			int opcao;
@@ -69,6 +72,9 @@ public class Batalha extends Controller {
 			simulacao.run();
 		}		
 	}
+	/**********************************************************************/
+	/*	Exercício 2: Simulação de uma batalha entre dois treinadores	  */
+	/**********************************************************************/
 	public void batalhaSelvagem (Treinador jogador) {
 		//Reinicialização do atributo correu (caso o jogador tenha fugido na última batalha)
 		if(jogador.fugiu() == true)
@@ -180,7 +186,6 @@ public class Batalha extends Controller {
 				System.out.println(aux.getNome() + " foi derrotado.");
 				/*Substituição do pokémon derrotado*/
 				if (alvo.temPokemonVivo()) {
-					//Caso não queira seguir o roteiro, e sim interagir com o software, basta utilizar o seguinte código:
 					Scanner leitura = new Scanner (System.in);		
 					System.out.println("Escolha o pokemon substituto: ");
 					alvo.imprimePokemons();
@@ -264,7 +269,7 @@ public class Batalha extends Controller {
 			return false;
 		}
 		public boolean treinadorTrocou() {
-			return true;
+			return false;
 		}
 	}
 	//Evento: Treinador usa poção de cura (Cura 100 de HP)

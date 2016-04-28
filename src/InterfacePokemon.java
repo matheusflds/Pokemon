@@ -1,10 +1,10 @@
 import java.util.Scanner;
 import java.lang.Math;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-//Esta classe tem como objetivo interagir com o usuário
+//Esta classe tem como objetivo interagir com o usuário 
+//no intuito de comprovar a funcionalidade dos eventos e dos métodos.
 public class InterfacePokemon {
 	
 	public static void main(String[] args) throws FileNotFoundException {			
@@ -12,17 +12,18 @@ public class InterfacePokemon {
 		Scanner leitura = new Scanner (System.in);
 		
 		System.out.println("Simulação do jogo Pokemon\n");
-		System.out.println("Bem vindo! O que deseja fazer?");
-		System.out.println("Digite 1 se quiser batalhar com outro treinador.");
-		System.out.println("Digite 2 se quiser andar pelo mapa.");
-		System.out.println("Digite 3 se quiser sair do jogo.");
+		System.out.println("Bem vindo! Escolha o modo de jogo:");
+		System.out.println("1 - Batalha entre treinadores"); //exercício 1 (batalha entre dois treinadores)
+		System.out.println("2 - Aventura");//exercício 2 (andar pelo mapa)
+		System.out.println("3 - Sair");
 		
 		int tipoJogo = leitura.nextInt(); 
 		
 		if(tipoJogo == 1){
-			//Criando os treinadores
+			//Criando os treinadores (para poupar tempo, nessa parte, a entrada vai ser lida de um arquivo .txt
 			Scanner treinadores = new Scanner(new FileReader("criaTreinadores.txt")).useDelimiter("\\||\\n");
 			//por alguma razão, não conseguimos ler o .txt ao utilizarmos o terminal do linux, mas funcionou normalmente executando pelo Eclipse.
+			
 			//Criando o primeiro jogador			
 			String nome1 = treinadores.next();
 			int quantidade = treinadores.nextInt();				
